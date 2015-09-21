@@ -1,0 +1,38 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3"> Grade <%= @grade.full_name %> </h1>
+</div>
+
+
+<h2>Subject's Details</h2>
+<table class="table ">
+	<thead class="table-head">
+		<th>Subect Name</th>
+		<th>Teacher Name</th>
+		<th>Action</th>
+	</thead>
+	<tbody>
+		<% @grade.bridges.try(:each) do |sub| %>
+			<tr>
+				<td>
+					<%= sub.subject.name %>	
+				</td>
+				<td><%= sub.employee.full_name %></td>
+				<td>
+					<%= link_to 'Edit', "javascript:void(0);" , class: 'edit-bridge-btn', style: '' %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+
+<script type="text/javascript">
+	
+$(document).ready(function(){
+    $('.edit-bridge-btn').on('click',function (e){
+      $('#edit_bridge').modal('show');
+    });
+  });
+
+
+</script>

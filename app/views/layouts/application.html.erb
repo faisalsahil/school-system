@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>School System</title>
+  <meta name="description" content="Angularjs, Html5, Music, Landing, 4 in 1 ui kits package" />
+  <meta name="keywords" content="AngularJS, angular, bootstrap, admin, dashboard, panel, app, charts, components,flat, responsive, layout, kit, ui, route, web, app, widgets" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+
+  <!-- <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" type="text/css" />
+  <link rel="stylesheet" href="../bower_components/animate.css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="../bower_components/simple-line-icons/css/simple-line-icons.css" type="text/css" />
+  <link rel="stylesheet" href="css/font.css" type="text/css" />
+  <link rel="stylesheet" href="css/app.css" type="text/css" /> -->
+
+  
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+
+</head>
+<body>
+<div class="app app-header-fixed  ">
+  
+  <!-- header -->
+  <header id="header" class="app-header navbar" role="menu">
+          <!-- navbar header -->
+      <div class="navbar-header bg-dark">
+        <button class="pull-right visible-xs dk" ui-toggle="show" target=".navbar-collapse">
+          <i class="glyphicon glyphicon-cog"></i>
+        </button>
+        <button class="pull-right visible-xs" ui-toggle="off-screen" target=".app-aside" ui-scroll="app">
+          <i class="glyphicon glyphicon-align-justify"></i>
+        </button>
+        <!-- brand -->        
+        <a href="#/" class="navbar-brand text-lt">
+          <span class="hidden-folded m-l-xs"></span>
+        </a>
+        <!-- / brand -->
+      </div>
+      <!-- / navbar header -->
+
+      <!-- navbar collapse -->
+      <div class="collapse pos-rlt navbar-collapse box-shadow bg-white-only" style="background-color:#57B223;">
+        <!-- buttons -->
+        <div class="nav navbar-nav hidden-xs">
+          <a href="#" class="btn no-shadow navbar-btn"  style="color:white;" ui-toggle="app-aside-folded" target=".app">
+            <i class="fa fa-dedent fa-fw text"></i>
+            <i class="fa fa-indent fa-fw text-active"></i>
+          </a>
+          <h1 style="color:white;margin-left:215px" class="pull-right">
+            Al Omam International School</h1>
+        </div>
+
+        <!-- / buttons -->
+
+        <!-- link and dropdown -->
+        <!-- / link and dropdown -->
+
+        <!-- search form -->
+        <!-- / search form -->
+
+        <!-- nabar right -->
+        <% if current_user %>
+        <ul class="nav navbar-nav navbar-right">          
+          <!-- <li class="dropdown">
+
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+              <i class="icon-bell fa-fw" style="color:white;"></i>
+              <span class="visible-xs-inline">Notifications</span>
+              <span class="badge badge-sm up bg-danger pull-right-xs">2</span>
+            </a>
+            
+            <div class="dropdown-menu w-xl animated fadeInUp">
+              <div class="panel bg-white">
+                <div class="panel-heading b-light bg-light">
+                  <strong>You have <span>2</span> notifications</strong>
+                </div>
+                <div class="list-group">
+                  <a href class="media list-group-item">
+                    <span class="pull-left thumb-sm" style="color:white;">
+                      <%= image_tag asset_path("img/a0.jpg"), alt: "...", class: "img-circle" %>
+                    </span>
+                    <span class="media-body block m-b-none">
+                      Use awesome animate.css<br>
+                      <small class="text-muted">10 minutes ago</small>
+                    </span>
+                  </a>
+                  <a href class="media list-group-item">
+                    <span class="media-body block m-b-none">
+                      1.0 initial released<br>
+                      <small class="text-muted">1 hour ago</small>
+                    </span>
+                  </a>
+                </div>
+                <div class="panel-footer text-sm">
+                  <a href class="pull-right"><i class="fa fa-cog"></i></a>
+                  <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
+                </div>
+              </div>
+            </div>
+          
+          </li> -->
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle clear" data-toggle="dropdown">
+              <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                <% if current_user && current_user.role == 'student' %>
+                  <%= image_tag Student.find_by_email(current_user.email).image, alt: "..." %>
+                <% else %>
+                  <%= image_tag asset_path("img/a0.jpg"), alt: "..." %>
+                <% end %>
+                <i class="on md b-white bottom"></i>
+              </span>
+              <% if current_user %>
+                <span class="hidden-sm hidden-md" style="color:white;"><%= current_user.email %></span> <b class="caret" style="color:white;"></b>
+                <% end %>
+            </a>
+
+            <!-- dropdown -->
+            <ul class="dropdown-menu animated fadeInRight w">
+              <!-- <li class="wrapper b-b m-b-sm bg-light m-t-n-xs">
+                <div>
+                  <p>300mb of 500mb used</p>
+                </div>
+                <div class="progress progress-xs m-b-none dker">
+                  <div class="progress-bar progress-bar-info" data-toggle="tooltip" data-original-title="50%" style="width: 50%"></div>
+                </div>
+              </li> -->
+              <!-- <li>
+                <a href>
+                  <span class="badge bg-danger pull-right">30%</span>
+                  <span>Settings</span>
+                </a>
+              </li> -->
+              <li>
+                <% if current_user && current_user.role == 'student' %>
+                  <%= link_to "Profile", student_path(Student.find_by_email(current_user.email).id) %>
+
+                <% elsif current_user && current_user.role == 'teacher' %>
+                  <%= link_to "Profile", employee_path(Employee.find_by_email(current_user.email).id) %>
+                <% end %>
+              </li>
+              <!-- <li>
+                <a ui-sref="app.docs">
+                  <span class="label bg-info pull-right">new</span>
+                  Help
+                </a>
+              </li> -->
+              <li class="divider"></li>
+              <li>
+                <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+              </li>
+            </ul>
+            <!-- / dropdown -->
+          </li>
+        </ul>
+        <%end%>
+        <!-- / navbar right -->
+      </div>
+      <!-- / navbar collapse -->
+  </header>
+  <!-- / header -->
+
+  <!-- aside -->
+  <aside id="aside" class="app-aside hidden-xs bg-dark">
+        <%= image_tag asset_path("img/logo.png"), alt: ".", class: 'img-responsive', style: "padding-left:10px"%>
+        <li class="line dk"></li>
+          <div class="aside-wrap">
+        <div class="navi-wrap">
+          <!-- user -->
+          <div class="clearfix hidden-xs text-center hide" id="aside-user">
+            <div class="dropdown wrapper">
+             <!--  <a href="app.page.profile">
+                <span class="thumb-lg w-auto-folded avatar m-t-sm">
+                  <%= image_tag asset_path("img/a0.jpg"), class: "img-full", alt: "..." %>
+                </span>
+              </a> -->
+              <!-- <a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
+                <span class="clear">
+                  <span class="block m-t-sm">
+                    <strong class="font-bold text-lt">John.Smith</strong> 
+                    <b class="caret"></b>
+                  </span>
+                  <span class="text-muted text-xs block">Art Director</span>
+                </span>
+              </a> -->
+              <!-- dropdown -->
+              <ul class="dropdown-menu animated fadeInRight w hidden-folded">
+               <!--  <li class="wrapper b-b m-b-sm bg-info m-t-n-xs">
+                  <span class="arrow top hidden-folded arrow-info"></span>
+                  <div>
+                    <p>300mb of 500mb used</p>
+                  </div>
+                  <div class="progress progress-xs m-b-none dker">
+                    <div class="progress-bar bg-white" data-toggle="tooltip" data-original-title="50%" style="width: 50%"></div>
+                  </div>
+                </li> -->
+                <li>
+                  <a href>Settings</a>
+                </li>
+                <li>
+                  <a href="page_profile.html">Profile</a>
+                </li>
+                <li>
+                  <a href>
+                    <span class="badge bg-danger pull-right">3</span>
+                    Notifications
+                  </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="page_signin.html">Logout</a>
+                </li>
+              </ul>
+              <!-- / dropdown -->
+            </div>
+            <div class="line dk hidden-folded"></div>
+          </div>
+          <!-- / user -->
+
+          <!-- nav -->
+          <% if current_user %>
+            <nav ui-nav class="navi clearfix">
+              <ul class="nav">
+                <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                  <span>Navigation</span>
+                </li>
+                <% if current_user.role != 'accountant' %>
+                  <% if current_user.role != 'student' && current_user.role != 'teacher'  %>
+                    <li>
+                      <a href class="auto">      
+                        <span class="pull-right text-muted">
+                          <i class="fa fa-fw fa-angle-right text"></i>
+                          <i class="fa fa-fw fa-angle-down text-active"></i>
+                        </span>
+                        <i class="glyphicon glyphicon-th"></i>
+                        <span>Students</span>
+                      </a>
+                      <ul class="nav nav-sub dk">
+                        <li class="nav-sub-header">
+                          <%= link_to("") do %>
+                            <span>Students</span>
+                          <% end %>
+                        </li>
+                        <li>
+                          <%= link_to(new_student_path) do %>
+                            <span>Admit Student</span>
+                          <% end %>
+                        </li>
+                        <li>
+                          <%= link_to(students_path) do %>
+                            <span>List All Students</span>
+                          <% end %>
+                        </li>     
+                      </ul>
+                    </li>
+
+
+                    <li>
+                      <a href class="auto">      
+                        <span class="pull-right text-muted">
+                          <i class="fa fa-fw fa-angle-right text"></i>
+                          <i class="fa fa-fw fa-angle-down text-active"></i>
+                        </span>
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span>Employee</span>
+                      </a>
+                      <ul class="nav nav-sub dk">
+                        <li class="nav-sub-header">
+                          <%= link_to("") do %>
+                            <span>Employee</span>
+                          <% end %>
+                        </li>
+                        <li>
+                          <%= link_to(new_employee_path) do %>
+                            <span>New Employee</span>
+                          <% end %>
+                        </li>
+                        <li>
+                          <%= link_to(employees_path) do %>
+                            <span>List All Employees</span>
+                          <% end %>
+                        </li> 
+                        <li>
+                          <%= link_to(categories_path) do %>
+                            <span>Manage Categories</span>
+                          <% end %>
+                        </li>
+                        <li>
+                          <%= link_to(departments_path) do %>
+                            <span>Manage Dept.</span>
+                          <% end %>
+                        </li>
+                        <li>
+                          <%= link_to(positions_path) do %>
+                            <span>Manage Positions</span>
+                          <% end %>
+                        </li>
+                      </ul>
+                    </li>
+
+                    <li>
+                      <%= link_to(leaves_path) do %>
+                        <i class="glyphicon glyphicon-flag"></i>
+                        <% if @leave_requests_count.to_i > 0 %>
+                          <b class="badge bg-danger pull-right"><%= @leave_requests_count %></b>
+                        <% end %>
+                        <span>Leave Requests</span>
+                      <% end %>
+                    </li>
+                  <% end %>
+
+                  <% if current_user.role != 'student' %>
+                    <li>
+                      <a href class="auto">      
+                        <span class="pull-right text-muted">
+                          <i class="fa fa-fw fa-angle-right text"></i>
+                          <i class="fa fa-fw fa-angle-down text-active"></i>
+                        </span>
+                        <i class="glyphicon glyphicon-book"></i>
+                        <span> Staff Attendance</span>
+                      </a>
+                      <ul class="nav nav-sub dk">
+                        <li class="nav-sub-header">
+                          <%= link_to("") do %>
+                            <span>Attendance</span>
+                          <% end %>
+                        </li>
+                        <% if current_user.role != 'teacher' %>
+
+                          <li>
+                            <%= link_to(mark_attendance_calendar_employees_path) do %>
+                              <span>Mark Attendance</span>
+                            <% end %>
+                          </li>
+                        <% end %>
+                        <li>
+                          <%= link_to(monthly_attendance_report_employees_path) do %>
+                            <span>Attendance Report</span>
+                          <% end %>
+                        </li> 
+                      </ul>
+                    </li>
+                  <% end %>
+                  <% if current_user.role != 'teacher' %>
+                    <li>
+                      <a href class="auto">      
+                        <span class="pull-right text-muted">
+                          <i class="fa fa-fw fa-angle-right text"></i>
+                          <i class="fa fa-fw fa-angle-down text-active"></i>
+                        </span>
+                        <i class="glyphicon glyphicon-book"></i>
+                        <span> Student Attend.</span>
+                      </a>
+                      <ul class="nav nav-sub dk">
+                        <li class="nav-sub-header">
+                          <%= link_to("") do %>
+                            <span>Attendance</span>
+                          <% end %>
+                        </li>
+                        <% if current_user.role != 'student' %>
+                          <li>
+                            <%= link_to(mark_attendance_calendar_students_path) do %>
+                              <span>Mark Attendance</span>
+                            <% end %>
+                          </li>
+                        <% end %>
+                        <li>
+                          <%= link_to(monthly_attendance_report_students_path) do %>
+                            <span>Attendance Report</span>
+                          <% end %>
+                        </li> 
+                      </ul>
+                    </li>
+                  <% end %>
+
+                  
+                  <li>
+                    <% if current_user.role != 'student' && current_user.role != 'teacher' %>
+                      <%= link_to(year_plans_path) do %>
+                        <i class="glyphicon glyphicon-time"></i>
+                        <span>Time Table</span>
+                      <% end %>
+                    <% elsif current_user.role == 'student' %>
+                      <%= link_to(time_table_path(TimeTable.find_by_grade_id(Student.find_by_email(current_user.email).grade_id).id)) do %>
+                        <i class="glyphicon glyphicon-time"></i>
+                        <span>Time Table</span>
+                      <% end %>
+                    <% end %>
+                  </li>
+
+              <% end %>
+              
+              <% if current_user.role != 'teacher' %>
+                <li>
+                  <a href class="auto">      
+                    <span class="pull-right text-muted">
+                      <i class="fa fa-fw fa-angle-right text"></i>
+                      <i class="fa fa-fw fa-angle-down text-active"></i>
+                    </span>
+                    <i class="glyphicon glyphicon-user"></i>
+                    <span>Fee Register</span>
+                  </a>
+                  <ul class="nav nav-sub dk">
+                    <li class="nav-sub-header">
+                      <%= link_to("") do %>
+                        <span>Fee Register</span>
+                      <% end %>
+                    </li>
+                    <% if current_user.role != 'student' %>
+
+                      <li>
+                        <%= link_to(new_fee_path) do %>
+                          <span>Submit Fee</span>
+                        <% end %>
+                      </li>
+                      <li>
+                        <%= link_to(fee_defaulter_fees_path) do %>
+                          <span>Fee Defaulters</span>
+                        <% end %>
+                      </li>
+                    <% end %>
+                    <li>
+                      <%= link_to(fees_path) do %>
+                        <span>Fee Records</span>
+                      <% end %>
+                    </li> 
+                  </ul>
+                </li>
+            <% end %>
+            <% if current_user.role != 'student' && current_user.role != 'teacher'%>
+              
+                <!-- li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                  <span>Components</span>
+                </li> -->
+              <% if current_user.role != 'accountant' %>
+                <li>
+                 <li>
+                  <a href class="auto">      
+                    <span class="pull-right text-muted">
+                      <i class="fa fa-fw fa-angle-right text"></i>
+                      <i class="fa fa-fw fa-angle-down text-active"></i>
+                    </span>
+                    <i class="glyphicon glyphicon-user"></i>
+                    <span>Batch</span>
+                  </a>
+                  <ul class="nav nav-sub dk">
+                    <li class="nav-sub-header">
+                      <%= link_to("") do %>
+                        <span>Batch</span>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to(new_batch_path) do %>
+                        <span>Add Batch</span>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to(batches_path) do %>
+                        <span>List All Batches</span>
+                      <% end %>
+                    </li> 
+                  </ul>
+                </li>
+
+                <li>
+                  <a href class="auto">      
+                    <span class="pull-right text-muted">
+                      <i class="fa fa-fw fa-angle-right text"></i>
+                      <i class="fa fa-fw fa-angle-down text-active"></i>
+                    </span>
+                    <i class="glyphicon glyphicon-user"></i>
+                    <span>Subject</span>
+                  </a>
+                  <ul class="nav nav-sub dk">
+                    <li class="nav-sub-header">
+                      <%= link_to("") do %>
+                        <span>Subject</span>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to(new_subject_path) do %>
+                        <span>Add Subject</span>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to(subjects_path) do %>
+                        <span>List All Subjects</span>
+                      <% end %>
+                    </li> 
+                  </ul>
+                </li>
+
+                <li>
+                 <li>
+                  <a href class="auto">      
+                    <span class="pull-right text-muted">
+                      <i class="fa fa-fw fa-angle-right text"></i>
+                      <i class="fa fa-fw fa-angle-down text-active"></i>
+                    </span>
+                    <i class="glyphicon glyphicon-user"></i>
+                    <span>Grade</span>
+                  </a>
+                  <ul class="nav nav-sub dk">
+                    <li class="nav-sub-header">
+                      <%= link_to("") do %>
+                        <span>Grade</span>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to(new_grade_path) do %>
+                        <span>Add Grade</span>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to(grades_path) do %>
+                        <span>List All grades</span>
+                      <% end %>
+                    </li> 
+                  </ul>
+                </li>
+
+              <% end %>  
+            <% end %>
+            <% if current_user.role != 'teacher'  %>
+                <li>
+                  <a href class="auto">      
+                    <span class="pull-right text-muted">
+                      <i class="fa fa-fw fa-angle-right text"></i>
+                      <i class="fa fa-fw fa-angle-down text-active"></i>
+                    </span>
+                    <i class="glyphicon glyphicon-user"></i>
+                    <span>Transport</span>
+                  </a>
+                  <ul class="nav nav-sub dk">
+                    <% if current_user.role != 'student'  %>
+                      <li class="nav-sub-header">
+                        <%= link_to("") do %>
+                          <span>Transport</span>
+                        <% end %>
+                      </li>
+                      
+                      <li>
+                        <%= link_to(vehicles_path) do %>
+                          <span>List All Vehicles</span>
+                        <% end %>
+                      </li>
+                      <li>
+                        <%= link_to(routes_path) do %>
+                          <span>List All Route</span>
+                        <% end %>
+                      </li>
+                      
+                      <li>
+                        <%= link_to(new_stop_path) do %>
+                          <span>New Stop</span>
+                        <% end %>
+                      </li>
+                      <li>
+                        <%= link_to(transports_path) do %>
+                          <span>Transport details</span>
+                        <% end %>
+                      </li>
+                    <% end %>
+                    
+                    <li>
+                      <%= link_to(bus_allotments_path) do %>
+                        <span>Allot Transportation details</span>
+                      <% end %>
+                    </li>
+                    
+                    <li>
+                      <%= link_to(transportfeerecords_path) do %>
+                        <span>Transport Fee Records</span>
+                      <% end %>
+                    </li>
+                    
+                  </ul>
+                </li>
+                <li>
+                  <a href class="auto">      
+                    <span class="pull-right text-muted">
+                      <i class="fa fa-fw fa-angle-right text"></i>
+                      <i class="fa fa-fw fa-angle-down text-active"></i>
+                    </span>
+                    <i class="glyphicon glyphicon-user"></i>
+                    <span>Book shop</span>
+                  </a>
+                  <ul class="nav nav-sub dk">
+                    <li class="nav-sub-header">
+                      <%= link_to("") do %>
+                        <span>Book shop</span>
+                      <% end %>
+                    </li>
+                  <% if current_user.role != 'student' %>
+
+                    <li>
+                      <%= link_to(shopcategories_path) do %>
+                        <span>All Categories</span>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to(add_stock_items_path) do %>
+                        <span>Add Stock</span>
+                      <% end %>
+                    </li>
+                  <% end %>
+                    <li>
+                      <%= link_to(items_path) do %>
+                        <span>All Items</span>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to(packages_path) do %>
+                        <span>All package</span>
+                      <% end %>
+                    </li>
+                    
+                    
+                    <li>
+                      <%= link_to(invoices_path) do %>
+                        <span>All invoices</span>
+                      <% end %>
+                    </li>
+                    
+                  </ul>
+                </li>
+          <% end %>
+                <% if current_user.role != 'accountant' %>
+                  <li>
+                    <a href class="auto">
+                      <span class="pull-right text-muted">
+                        <i class="fa fa-fw fa-angle-right text"></i>
+                        <i class="fa fa-fw fa-angle-down text-active"></i>
+                      </span>
+                      <i class="glyphicon glyphicon-briefcase icon"></i>
+                      <span>Examinations</span>
+                    </a>
+                    <ul class="nav nav-sub dk">
+                      <li>
+                        <%= link_to(new_exam_path) do %>
+                          <span>Create Exam</span>
+                        <% end %>
+                      </li>
+                      <li>
+                        <%= link_to(exams_path) do %>
+                          <span>Exams List</span>
+                        <% end %>
+                      </li>
+                      <li>
+                        <%= link_to(new_marksheet_path) do %>
+                          <span>Upload Marksheet</span>
+                        <% end %>
+                      </li>
+                      <li>
+                        <%= link_to(marksheets_path) do %>
+                          <span>Marksheet</span>
+                        <% end %>
+                      </li>
+                      <!-- <li>
+                        <a href="ui_icon.html">
+                          <b class="badge bg-info pull-right">3</b>
+                          <span>Icons</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="ui_grid.html">
+                          <span>Grid</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="ui_widget.html">
+                          <b class="badge bg-success pull-right">13</b>
+                          <span>Widgets</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="ui_sortable.html">
+                          <span>Sortable</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="ui_portlet.html">
+                          <span>Portlet</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="ui_timeline.html">
+                          <span>Timeline</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="ui_jvectormap.html">
+                          <span>Vector Map</span>
+                        </a>
+                      </li> -->
+                    </ul>
+                  </li>
+                <% end %>
+                <!-- <li>
+                  <a href class="auto">
+                    <span class="pull-right text-muted">
+                      <i class="fa fa-fw fa-angle-right text"></i>
+                      <i class="fa fa-fw fa-angle-down text-active"></i>
+                    </span>
+                    <b class="label bg-primary pull-right">2</b>
+                    <i class="glyphicon glyphicon-list"></i>
+                    <span>Table</span>
+                  </a>
+                  <ul class="nav nav-sub dk">
+                    <li class="nav-sub-header">
+                      <a href>
+                        <span>Table</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="table_static.html">
+                        <span>Table static</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="table_datatable.html">
+                        <span>Datatable</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="table_footable.html">
+                        <span>Footable</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href class="auto">
+                    <span class="pull-right text-muted">
+                      <i class="fa fa-fw fa-angle-right text"></i>
+                      <i class="fa fa-fw fa-angle-down text-active"></i>
+                    </span>
+                    <i class="glyphicon glyphicon-edit"></i>
+                    <span>Form</span>
+                  </a>
+                  <ul class="nav nav-sub dk">
+                    <li class="nav-sub-header">
+                      <a href>
+                        <span>Form</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="form_element.html">
+                        <span>Form elements</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="ui_chart.html">
+                    <i class="glyphicon glyphicon-signal"></i>
+                    <span>Chart</span>
+                  </a>
+                </li>
+                <li>
+                  <a href class="auto">
+                    <span class="pull-right text-muted">
+                      <i class="fa fa-fw fa-angle-right text"></i>
+                      <i class="fa fa-fw fa-angle-down text-active"></i>
+                    </span>
+                    <i class="glyphicon glyphicon-file icon"></i>
+                    <span>Pages</span>
+                  </a>
+                  <ul class="nav nav-sub dk">
+                    <li class="nav-sub-header">
+                      <a href>
+                        <span>Pages</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="page_profile.html">
+                        <span>Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="page_post.html">
+                        <span>Post</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="page_search.html">
+                        <span>Search</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="page_invoice.html">
+                        <span>Invoice</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="page_price.html">
+                        <span>Price</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="page_lockme.html">
+                        <span>Lock screen</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="page_signin.html">
+                        <span>Signin</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="page_signup.html">
+                        <span>Signup</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="page_forgotpwd.html">
+                        <span>Forgot password</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="page_404.html">
+                        <span>404</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li> -->
+<!-- 
+                <li class="line dk hidden-folded"></li>
+                <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">          
+                  <span>Your Stuff</span>
+                </li>   -->
+
+                
+
+              <!--   <li>
+                  <a href="page_profile.html">
+                    <i class="icon-user icon text-success-lter"></i>
+                    <b class="badge bg-success pull-right">30%</b>
+                    <span>Profile</span>
+                  </a>
+                </li>
+                <li>
+                  <a href>
+                    <i class="icon-question icon"></i>
+                    <span>Documents</span>
+                  </a>
+                </li> -->
+              </ul>
+            </nav>
+          <% end %>
+          <!-- nav -->
+
+          <!-- aside footer -->
+<!--           <div class="wrapper m-t">
+          <! <div class="wrapper m-t">
+            <div class="text-center-folded">
+              <span class="pull-right pull-none-folded">60%</span>
+              <span class="hidden-folded">Milestone</span>
+            </div>
+            <div class="progress progress-xxs m-t-sm dk">
+              <div class="progress-bar progress-bar-info" style="width: 60%;">
+              </div>
+            </div>
+            <div class="text-center-folded">
+              <span class="pull-right pull-none-folded">35%</span>
+              <span class="hidden-folded">Release</span>
+            </div>
+            <div class="progress progress-xxs m-t-sm dk">
+              <div class="progress-bar progress-bar-primary" style="width: 35%;">
+              </div>
+            </div>
+          </div> -->
+          <!-- / aside footer -->
+        </div>
+      </div>
+  </aside>
+  <!-- / aside -->
+  
+  <!-- content -->
+  <div id="content" class="app-content" role="main">
+    <div class="app-content-body ">
+      
+
+<div class="hbox hbox-auto-xs hbox-auto-sm" style="background-color: white; padding: 0 15px 0">
+
+
+<!-- <div class="hbox hbox-auto-xs hbox-auto-sm" ng-init="
+    app.settings.asideFolded = false; 
+    app.settings.asideDock = false;
+  "> -->
+ <!-- main -->
+ <div style=" margin-top:20px;"><%= render partial: 'partials/flash_message' %></div>
+
+  <%= yield %>
+</div>
+
+
+    </div>
+  </div>
+  <!-- / content -->
+
+  <!-- footer -->
+<!--   <footer id="footer" class="app-footer" role="footer">
+        <div class="wrapper b-t bg-light">
+      <span class="pull-right">2.0.1 <a href ui-scroll="app" class="m-l-sm text-muted"><i class="fa fa-long-arrow-up"></i></a></span>
+      &copy; 2015 Copyright.
+    </div>
+  </footer> -->
+  <!-- / footer -->
+
+</div>
+
+
+
+</body>
+<script type="text/javascript">
+   $(".datepicker").datepicker();
+   // $(".datepicker").datepicker();
+</script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  //called when key is pressed in textbox
+  $(".float").keypress(function (e) {
+     //if the letter is not digit then display error and don't type anything
+     if (e.which != 8 && e.which != 0  && (e.which < 46 || e.which > 57)) {
+        //display error message
+        $("#errmsg").html("Digits Only").show().fadeOut("slow");
+               return false;
+    }
+   });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+  //called when key is pressed in textbox
+  $(".numeric").keypress(function (e) {
+     //if the letter is not digit then display error and don't type anything
+     if (e.which != 8 && e.which != 0  && (e.which < 46 || e.which > 57)) {
+        //display error message
+        $("#errmsg").html("Digits Only").show().fadeOut("slow");
+               return false;
+    }
+   });
+});
+</script>
+
+</html>

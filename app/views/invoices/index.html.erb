@@ -1,0 +1,65 @@
+<%= stylesheet_link_tag "//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" %>
+<%= javascript_include_tag "https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" %>
+<%= javascript_include_tag "//cdn.datatables.net/tabletools/2.2.2/js/dataTables.tableTools.min.js" %>
+<%= javascript_include_tag "https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js" %>
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('#example').dataTable({
+        dom: 'T<"clear">lfrtip',
+        tableTools: {
+            "sSwfPath": "https://cdn.datatables.net/tabletools/2.2.2/swf/copy_csv_xls_pdf.swf"
+        }
+    });
+
+
+
+  });
+
+</script>
+
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">Invoices
+  <% if current_user.role != 'student'  %>
+    <a href="<%= new_invoice_path %>" class="btn btn-color pull-right" style="width:200px;">New Invoice</a></h1>
+  <% end %>
+</div>
+
+<table class="table" id="example">
+  <thead class= "table-head">
+    <tr>
+      <th>Date</th>
+      <th>Student</th>
+      <th>Grade</th>
+      <th>Sub Total</th>
+      <th>Discount</th>
+      <th>Grand Total</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invoices.each do |invoice| %>
+      <tr>
+        <td><%= invoice.created_at.strftime("%m/%d/%Y") %></td>
+        <td><%= invoice.student.fullname %></td>
+        <td><%= invoice.student.grade.full_name %></td>
+        <% subtotal = invoice.lines.sum('quantity * price') %>
+        <td><%= subtotal %></td>
+        <td><%= invoice.discount %></td>
+        <td><%= subtotal - invoice.discount %></td>
+
+        <td><%= link_to '', invoice,:class =>  'btn btn-success  glyphicon glyphicon-ok-circle' %>
+        <% if current_user.role != 'student'  %>
+
+          <%= link_to '', edit_invoice_path(invoice),:class => ' btn btn-info  glyphicon glyphicon glyphicon-pencil bcc',style: "width:40px;" %>
+          <%= link_to '', invoice, method: :delete, data: { confirm: 'Are you sure?' } ,:class =>  'btn btn-danger glyphicon glyphicon glyphicon-trash'%>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

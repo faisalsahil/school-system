@@ -1,0 +1,117 @@
+<style type="text/css">
+    @media (min-width: 1200px)
+.container {
+     width: 970px ;
+}
+</style>
+
+<div class="container" style="max-width:970px;" >
+	
+        <h3><%= @student.try(:fullname) %> <label style="font-weight:normal">(<%= @student.try(:arabicname) %>)</label></h3>
+		<br>
+        <div class="col-sm-4">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td class="student-profile-td">
+                            Class
+                        </td>
+
+                        <td>
+                            <%= @student.try(:grade_id) %>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="student-profile-td">
+                            Date of Birth
+                        </td>
+
+                        <td>
+                            <%= @student.try(:dob) %>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="student-profile-td">
+                            Iqama Number
+                        </td>
+
+                        <td>
+                            <%= @student.try(:iqamaNumber) %>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="student-profile-td">
+                            Iqama Expiry
+                        </td>
+
+                        <td>
+                            <%= @student.try(:iqamaExpiry) %>
+                        </td>
+                    </tr>
+
+                     <tr>
+                        <td class="student-profile-td">
+                            Gender
+                        </td>
+
+                        <td>
+                            <%= @student.try(:gender) %>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="student-profile-td">
+                            Nationality
+                        </td>
+
+                        <td>
+                            <%= @student.try(:nationality) %>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="student-profile-td">
+                            Mother Language
+                        </td>
+
+                        <td>
+                            <%= @student.try(:language) %>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="student-profile-td">
+                            Religion
+                        </td>
+
+                        <td>
+                            <%= @student.try(:religion) %>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="student-profile-td">
+                            Birth Place
+                        </td>
+
+                        <td>
+                            <%= @student.try(:birth_place) %>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-sm-4">
+        <%= image_tag @student.try(:image), class: "img-responsive student-image" %>
+         <div>
+         <br>
+            <% if @student %><%= link_to "More Details", student_path(@student.id), class: "btn btn-success" %><% end %>
+        </div>
+        </div>
+       
+    </div>

@@ -1,0 +1,83 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3"><%= "Class/Section: #{@grade.full_name} " %>&nbsp;&nbsp;&nbsp;&nbsp;<%= "Class Teacher:  #{@teacher.full_name} " %>
+  
+ 	<% if current_user.role != 'student' %>
+  	<%= link_to(@time_table, method: :delete, class: 'btn m-b-xs btn-sm btn-danger btn-addon pull-right', data: { confirm: 'This will delete current time table. Are you sure that you want to make a new one?' }) do %>
+
+  	<%#= link_to(new_employee_path, class: "btn m-b-xs btn-sm btn-primary btn-addon pull-right" ) do %>
+	    <i class="fa fa-plus"></i>
+	    
+	    	Remake Time Table
+	  <% end %>
+	<% end %>
+  </h1>
+</div>
+
+<div class="wrapper-md">
+  <table class="table table-striped">
+	  <thead>
+	    <tr>
+	      <th rowspan="2" class="text-center">Periods</th>
+	      <th colspan="<%= 7 - @weekends.count %>" class="text-center">Days</th>
+	    </tr>
+	    <tr>
+	    	<% Date::DAYNAMES.each_with_index do |day,i| %>
+	    		<% if @weekends.find{ |w| w.weekend_day == i}.nil? %>
+		      	<th class="text-center"><%= day %></th>
+		      <% end %>
+		    <% end %>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	<% tcount = 0 %>
+  		<% @total_periods.times do |d| %>
+  			<tr>
+	  			<% if @time_table.break_after_period.to_i == d %>
+	  				
+	  				<td colspan="<%= 9 - @weekends.count %>" class="text-center" style="background-color:#dee5e7;">BREAK TIME</td>
+	  			<% elsif @time_table.prayer_after_period.to_i == d %>
+	  				
+	  				<td colspan="<%= 9 - @weekends.count %>" class="text-center" style="background-color:#dee5e7;">PRAYER TIME</td>
+	  			<% else %>
+			      <td class="text-center"><%= (d+1).ordinalize %></td>
+			      <% Date::DAYNAMES.each do |day| %>
+			      	<% period = @periods.find{ |per| per.day == day && per.period_num == tcount } %>
+
+		    			<% if period.present? %>
+		      			
+		      			<% puts "ts" %>
+		      			<% puts %>
+		      			<% puts %>
+		      			<% puts %>
+		      			<% puts %>
+		      			<td class="text-center"><%= Subject.find(period['subject_id'].to_i).try(:name) %></td>
+			      	<% end %>
+				    <% end %>
+				    <% tcount = tcount + 1%>
+				  <% end %>
+			  </tr>
+  		<% end %>
+	  </tbody>
+	</table>
+</div>
+
+<%#= link_to 'Edit', edit_time_table_path(@time_table, grade_id: @time_table.grade_id) %> 
+<%#= link_to 'Back', time_tables_path %>
+
+
+<style type="text/css">
+table {
+  border-collapse: collapse;
+}
+
+td, th {
+  border: 1px solid Black;
+  padding: 5px 15px;
+}
+
+thead > tr:nth-child(1) > th:nth-child(1) { background-color: Grey; color: White; }
+thead > tr:nth-child(1) > th:nth-child(2) { background-color: #729F32; color: White;}
+thead > tr:nth-child(1) > th:nth-child(3) { background-color: Orange; color: White; }
+thead > tr:nth-child(2) > th              { background-color: Orange; color: White; }
+
+</style>

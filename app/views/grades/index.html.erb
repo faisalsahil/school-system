@@ -1,0 +1,50 @@
+<%= stylesheet_link_tag "//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" %>
+<%= javascript_include_tag "https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" %>
+<%= javascript_include_tag "//cdn.datatables.net/tabletools/2.2.2/js/dataTables.tableTools.min.js" %>
+<%= javascript_include_tag "https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js" %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').dataTable({
+        dom: 'T<"clear">lfrtip',
+        tableTools: {
+          "sSwfPath": "https://cdn.datatables.net/tabletools/2.2.2/swf/copy_csv_xls_pdf.swf"
+        }
+    });
+  });
+</script>
+
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">Students
+  <a href="<%= new_grade_path %>" class="btn pull-right btn-color" style="width:200px;">Add a new Grade</a></h1>
+</div>
+<br><br>
+<table class="table" id="example">
+  <thead class="table-head">
+    <tr>
+      <th>Name</th>
+      <th>Section</th>
+      <th>Batch</th>
+      <th>No. of students</th>
+      <th> Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @grades.each do |grade| %>
+      <tr>
+        <td><%= link_to grade.name, all_student_grade_path(grade.id) %></td>
+        <td><%= grade.section %></td>
+        <td><%= grade.batch.name %></td>
+        <td><%= grade.students.count %></td>
+        <td><%= link_to '', grade,:class =>  'btn btn-success  glyphicon glyphicon-ok-circle' %>
+            <%= link_to '', edit_grade_path(grade),:class => ' btn btn-info  glyphicon glyphicon glyphicon-pencil bcc',style: "width:40px;" %>
+            <%= link_to '', grade, method: :delete, data: { confirm: 'Are you sure?' } ,:class =>  'btn btn-danger glyphicon glyphicon glyphicon-trash'%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

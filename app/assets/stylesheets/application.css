@@ -1,0 +1,107 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_self
+ *= require externals/bootstrap/dist/css/bootstrap
+ *= require externals/animate.css/animate
+ *= require externals/font-awesome/css/font-awesome
+ *= require externals/simple-line-icons/css/simple-line-icons
+ *= require font
+ *= require app
+ *= require externals/bootstrap-daterangepicker/daterangepicker-bs3
+ *= require fullcalendar
+ *= require bootstrap-datepicker
+ */
+.navbar-brand{
+	width: 170px !important;
+}
+.admission-form-heading{
+    height: 56px;
+    padding: 1%;
+    padding-left: 5%; 
+    background-color: #3FC8B9;
+    text-align: center;
+    width: 91%;
+}
+
+.btn-color{
+  background-color: #57B223;
+  color: white;
+}
+.container{
+      width: 1068px;
+  }
+
+  .sss{
+    border:1px solid#e5e5e5;   padding: 1%; 
+  }
+
+  .lll{
+    width: auto !important; 
+    background-color: white;
+    padding-right: 16px;
+    padding-left: 15px;
+    border: 1px solid;
+    border-color: #729F32;
+    border-radius: 21px;
+  }
+
+  .displayn{
+    display: none;
+  }
+
+.bt-login, .bt-login:hover, .bt-login:active, .bt-login:focus {
+    background-color: #46b8da;
+    color: #ffffff;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    transition: background-color 300ms linear 0s;
+}
+
+
+.login-tab {
+/*    margin: 0 auto;*/
+    /*max-width: 380px;*/
+}
+
+.login-modal-header {
+    background: #27c24c;
+    color: #fff;
+}
+
+.login-modal-header .modal-title {
+    color: #fff;
+}
+
+.login-modal-header .close {
+    color: #fff;
+}
+
+.login-modal i {
+    color: #000;
+}
+
+.login-modal form {
+   /* max-width: 340px;*/
+}
+
+.tab-pane form {
+/*    margin: 0 auto;*/
+}
+
+.login-modal-footer {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+
+

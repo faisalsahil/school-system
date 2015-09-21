@@ -1,0 +1,15 @@
+<div class="bg-light lter wrapper-md">	
+	<p id="notice"><%= notice %></p>
+
+	<p>
+	  <strong>Name:</strong>
+	  <%= @category.name %>
+	</p>
+
+	<p>
+	  <strong>Prefix:</strong>
+	  <%= @category.prefix %>
+	</p>
+
+            <%= link_to 'Back', categories_path,class: "btn btn-color" %>
+</div>
